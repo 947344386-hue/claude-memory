@@ -8,6 +8,7 @@
 - [GitHub noreply 邮箱](feedback_github_noreply_email.md) — 推 GitHub 前提交 author 必须用 `251538000+947344386-hue@users.noreply.github.com`，QQ 邮箱会被 GH007 拦
 - [UE 验证边界](feedback_ue_validation_boundary.md) — 优先做 C++ 业务逻辑；蓝图配置、关卡摆放和 PIE 默认由用户完成
 - [UE UI 开发工作流](reference_ui_workflow.md) — C++ Widget 默认布局 + Subsystem 管生命周期 + Python 建资产，蓝图不建也能用
+- [Memory 自动推 GitHub](feedback_memory_auto_push.md) — 每次写 memory 后自动 commit+push 到 claude-memory 仓库，保证跨主机同步；路径相关记忆换机需更新
 
 ## Reference
 - [赌石玩法开发引导](kimmelrebirth_stonebetting.md) — 涉及 KimmelRebirth 赌石/原石/开窗/商人/鹰眼/背包/回收商时，先读 StoneBetting canonical guide 并在结束时维护
