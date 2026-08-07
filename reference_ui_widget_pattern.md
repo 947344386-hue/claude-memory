@@ -1,12 +1,16 @@
 ---
 name: ui-widget-pattern
-description: C++ Widget 默认布局 + BindWidgetOptional + Subsystem 单例的标准模式，可跨项目复用
+description: C++ 默认布局 + BindWidgetOptional + Subsystem 管理 Widget 单例的零蓝图 UI 标准模式（含关键时序与项目文件指针），跨项目可复用
 metadata: 
   node_type: memory
   type: reference
   originSessionId: f404e089-1958-4eb9-ba91-c8dccd2e36b7
-  modified: 2026-07-31T06:14:12.336Z
+  modified: 2026-08-07T13:08:34.642Z
 ---
+
+## TL;DR（传给新 session）
+
+> 用 ClcTeleportMenuWidget / ClcKeyPromptWidget 的模式做 UI：C++ 写 Widget 基类，NativeOnInitialized 里调 BuildDefaultLayout() 用 WidgetTree->ConstructWidget<T>() 构造所有控件（Button/ProgressBar/Slider 等），NativeConstruct 里 AddDynamic 绑按钮事件，BindWidgetOptional 属性让蓝图可替换；用 ULocalPlayerSubsystem 管理 Widget 单例（CreateWidget + AddToViewport + RemoveFromParent）；不想建蓝图也能用 C++ 默认布局。具体参考 Plugins/ClaudeCore/Source/ClaudeCore/Public/Tools/Teleport/UI/ClcTeleportMenuWidget.* 和 Subsystems/ClcKeyPromptSubsystem.*。
 
 ## 问题
 UE UMG 蓝图做 UI 需要 C++ 父类 → 建 WBP 蓝图 → 摆控件 → 连线绑定，链条长、跨机器迁移易丢蓝图资产。目标是：**不建蓝图也能跑完整 UI**，蓝图只做可选美化。
@@ -127,13 +131,26 @@ if (!WidgetClass)
 HUDWidget = CreateWidget<UMyWidget>(PC, WidgetClass);
 ```
 
+## 关键时序
+
+1. `NativeOnInitialized` → `BuildDefaultLayout()`（`WidgetTree->RootWidget == nullptr` 才生成，BP 已有布局就跳过）
+2. `NativeConstruct` → 按钮 `OnClicked.AddDynamic`（RemoveDynamic + AddDynamic 幂等绑定）
+3. `Subsystem` 懒创建：`CreateWidget` → `AddToViewport` → 数据刷新
+4. `Subsystem::Deinitialize` → `RemoveFromParent` + 清理
+5. `BindWidgetOptional` 的 UPROPERTY：蓝图同名控件自动绑定，不建也不报错
+
 ## 收益
 - **零蓝图依赖**：C++ 编译完即完整 UI，无需建 WBP、摆控件、连线
 - **跨机器迁移**：无 .uasset 依赖，纯 C++ 代码，git clone + 编译 = 完整功能
 - **渐进增强**：想美化时建 WBP 选父类，逐控件覆盖（不改 C++）
 - **内存更小**：不建蓝图 Widget 不打包冗余 UMG 蓝图资产
 
-## 与本项目相关文件
-- `ClcTeleportMenuWidget`（传送菜单，C++ 默认布局 + BindWidgetOptional）
-- `ClcKeyPromptWidget`（按键提示，C++ 默认布局 + Subsystem 单例）
-- `ClcVendorHUD`（回收台 HUD，C++ 默认布局 + HUDWidgetClass fallback）
+## 核心文件参考
+
+- Widget 基类（按钮+默认布局）：`Plugins/ClaudeCore/Source/ClaudeCore/Public/Tools/Teleport/UI/ClcTeleportMenuWidget.*`
+- 列表项（按钮+文字）：`Plugins/ClaudeCore/Source/ClaudeCore/Public/Tools/Teleport/UI/ClcTeleportEntryWidget.*`
+- 提示条（纯文本+Canvas 锚点）：`Plugins/ClaudeCore/Source/ClaudeCore/Public/UI/ClcKeyPromptWidget.*`
+- Subsystem 管生命周期：`Plugins/ClaudeCore/Source/ClaudeCore/Public/Subsystems/ClcKeyPromptSubsystem.*`
+- Enhanced Input 绑定：`Plugins/ClaudeCore/Source/ClaudeCore/Public/Subsystems/ClcTeleportSubsystem.cpp` 的 `EnsureInputBinding()`
+- HUD 回收台示例：`ClcVendorHUD`（C++ 默认布局 + HUDWidgetClass fallback）
+- 资产创建 Python 脚本参考：`F:\ClaudeLibrary\doc\SetupTeleportAssets.py`（已删，参考对应 session 对话中的脚本内容）
