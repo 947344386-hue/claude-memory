@@ -12,6 +12,6 @@
 - [UE 资源路径由用户管理](feedback_user_manages_asset_paths.md) — 不擅自恢复、移动或重命名 KimmelRebirth 资产，资源目录规划由用户负责
 
 ## Reference
-- [赌石玩法开发引导](kimmelrebirth_stonebetting.md) — 涉及 KimmelRebirth 赌石/原石/开窗/商人/鹰眼/背包/回收商时，先读 StoneBetting canonical guide 并在结束时维护
+- [赌石玩法开发引导](kimmelrebirth_stonebetting.md) — 涉及 KimmelRebirth 赌石/原石/擦石/商人/鹰眼/背包/回收商时，先读 StoneBetting canonical guide 并在结束时维护
 - [DA 配置——unreal Python 脚本](reference_da_config_python.md) — 配 DataAsset 字段走 unreal Python 脚本 + 编辑器 py 命令，VibeUE MCP 无此能力已删除
 - [UE C++ Widget 标准模式](reference_ui_widget_pattern.md) — 零蓝图 UI：BuildDefaultLayout + BindWidgetOptional + Subsystem 单例，跨项目可复用
