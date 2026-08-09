@@ -11,8 +11,8 @@
 - [GitHub noreply 邮箱](feedback_github_noreply_email.md) — 推 GitHub 前提交 author 必须用 `251538000+947344386-hue@users.noreply.github.com`，QQ 邮箱会被 GH007 拦
 - [UE 验证边界](feedback_ue_validation_boundary.md) — 优先做 C++ 业务逻辑；蓝图配置、关卡摆放和 PIE 默认由用户完成
 - [Memory 自动推 GitHub](feedback_memory_auto_push.md) — 每次写 memory 后自动 commit+push 到 claude-memory 仓库，保证跨主机同步；路径相关记忆换机需更新
+- [UE 资产合作与自动搭建工作流](reference_ui_widget_pattern.md) — C++ 基线 + 所有权安全的 Python 生成器 + DA/MID 注入 + 可选 WBP + 分层验收
 - [UE 资源路径由用户管理](feedback_user_manages_asset_paths.md) — 不擅自恢复、移动或重命名 KimmelRebirth 资产，资源目录规划由用户负责
 
 ## Reference
 - [赌石玩法开发引导](kimmelrebirth_stonebetting.md) — 涉及 KimmelRebirth 赌石/原石/擦石/商人/鹰眼/背包/回收商时，先读 StoneBetting canonical guide 并在结束时维护
-- [UE 资产自动搭建工作流](reference_ui_widget_pattern.md) — C++ 可运行基线 + Unreal Python 搭资产 + DA 注入真实引用 + 蓝图可选换皮
