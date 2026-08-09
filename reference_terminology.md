@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 6f668379-1a01-4bf6-ad21-03e1cf824113
-  modified: 2026-08-07T06:13:18.765Z
+  modified: 2026-08-09T11:32:48.052Z
 ---
 
 项目开发术语统一（2026-08-07 定，用户拍板）。**文案、文档、memory、UI 字符串统一用以下术语；C++ 类名/函数名保留英文（Opening/Cutting）作内部标识符，材质资产名也保留。**
@@ -37,4 +37,4 @@ metadata:
 
 阶段属性 `EClcStonePhase{Unworked,Windowed,Cut}`：Windowed=已擦石、Cut=已解石（代码枚举名保留，文档用中文术语）。
 
-链接：[[kimmelrebirth-stonebetting]]、[[ui-widget-pattern]]。
+链接：[[kimmelrebirth-stonebetting]]、[[ue-asset-collaboration-workflow]]。

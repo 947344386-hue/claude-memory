@@ -15,5 +15,4 @@
 
 ## Reference
 - [赌石玩法开发引导](kimmelrebirth_stonebetting.md) — 涉及 KimmelRebirth 赌石/原石/擦石/商人/鹰眼/背包/回收商时，先读 StoneBetting canonical guide 并在结束时维护
-- [DA 配置——unreal Python 脚本](reference_da_config_python.md) — 配 DataAsset 字段走 unreal Python 脚本 + 编辑器 py 命令，VibeUE MCP 无此能力已删除
-- [UE C++ Widget 标准模式](reference_ui_widget_pattern.md) — 零蓝图 UI：BuildDefaultLayout + BindWidgetOptional + Subsystem 单例，跨项目可复用
+- [UE 资产自动搭建工作流](reference_ui_widget_pattern.md) — C++ 可运行基线 + Unreal Python 搭资产 + DA 注入真实引用 + 蓝图可选换皮
