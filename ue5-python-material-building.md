@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 13730bae-c1a1-428c-ae73-5c54845695a4
-  modified: 2026-08-10T11:37:30.787Z
+  modified: 2026-08-10T11:38:17.490Z
 ---
 
 # UE 5.6 Python 材质构建核心经验
