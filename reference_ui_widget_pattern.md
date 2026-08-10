@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: feedback
   originSessionId: cafda970-e47d-4931-908e-f3dd0ceb14d7
-  modified: 2026-08-09T11:48:31.180Z
+  modified: 2026-08-10T04:45:34.867Z
 ---
 
 优先采用统一且可跨项目复用的 UE 资产合作流：**C++ 定义运行时契约并提供不依赖蓝图换皮的可运行基线；Unreal Python 只搭建可确定描述的资产结构；DataAsset 或项目现有的集中配置保存用户真实内容引用；Blueprint/WBP 只承担可选表现；最后按脚本、资产、编译、编辑器和 PIE 分层验收。**
@@ -186,6 +186,51 @@ UE 5.6 关键 API 细节：
 - 每条连接都检查布尔返回值，失败立即抛错；不能只看资产文件是否生成。
 - 明确设置 Material Domain、Blend Mode、Shading Model、Two Sided 等目标属性，不依赖编辑器当前默认值。
 - 最后依次执行 Layout、Recompile、结构验证和 Save；只有全部通过才保存。
+
+### UE 5.6 材质 Python API：严禁凭直觉猜签名
+
+**规则：把 Unreal Python 绑定当成随引擎版本变化的严格 ABI，而不是普通 Python 库。写材质生成器前，必须先找当前项目中已经成功运行的同版本脚本作为“可执行文档”，再核对官方文档、编辑器反射信息或实际错误日志；不得根据函数名、C++ API、旧版博客或其他语言习惯猜参数。**
+
+**Why:** 2026-08-10 生成 Deferred Decal 材质时，材质数学本身没有问题，但连续踩中了 UE 5.6 Python 反射层的非直觉差异：`MD_DECAL` 实际应为 `MD_DEFERRED_DECAL`；参数默认值不是 `.default`；Constant 的标量属性叫 `R` 而不是 `value`；表达式节点没有实例方法 `connect_expression`；`connect_material_property` 也不是“材质、表达式、输出索引、字符串属性名”四参数。通用大模型常混用 C++ 接口、旧版 UE 示例和看似合理的 Python 命名，因此能写出语义正确却无法执行的脚本。Python 语法检查只能证明脚本可解析，完全不能证明 Unreal API 调用有效。
+
+**How to apply:**
+
+1. **先查本地已验证实现。** 同一 UE 版本下，优先搜索项目中成功运行过的生成器，例如材质连接、保存和重编译代码；它比跨版本网络片段可靠。没有可复用样例时，再查当前版本官方 Python 文档或在编辑器中检查暴露签名。
+2. **先做最小图，再逐步扩展。** 先创建材质、一个参数、一个输出连接并编译；成功后再增加 UV、遮罩和视觉细节。不要一次生成几十个节点后靠整段 traceback 猜根因。
+3. **所有连接都必须断言返回值。** `connect_material_expressions` 和 `connect_material_property` 返回 false 就立即抛错；不要把“`.uasset` 已出现”误判为材质图有效。
+4. **节点输入名也属于版本化契约。** 不确定 `SmoothStep` 等节点的 pin 名时，不要猜 `X/Min/Max`；优先改写为已验证的 `Subtract`、`Divide`、`Saturate`、`Multiply` 等基础节点组合，或先查该节点在当前版本的暴露名称。
+5. **运行失败按半成品处理。** 在打开的编辑器里异常退出不会自动事务回滚，目标 package 可能已 dirty。仅对明确由生成器拥有的资产做幂等清空重建；所有权不明则停止。成功标记必须放在 Recompile 和 Save 之后。
+6. **优先由 Claude 直接运行并读日志。** 用户允许桌面操作或 commandlet 时，不应让用户充当重复试错执行器；每次只根据真实日志修一个 API 问题，再重跑验证。
+
+本项目 UE 5.6 已验证的精确写法：
+
+```python
+# Deferred Decal：先设允许的混合模式，再切 Domain，避免中间态校验警告
+mat.set_editor_property("blend_mode", unreal.BlendMode.BLEND_TRANSLUCENT)
+mat.set_editor_property("material_domain", unreal.MaterialDomain.MD_DEFERRED_DECAL)
+mat.set_editor_property("shading_model", unreal.MaterialShadingModel.MSM_UNLIT)
+
+# 参数与 Constant 默认值
+vector_param.set_editor_property("default_value", unreal.LinearColor(1, 1, 1, 1))
+scalar_param.set_editor_property("default_value", 0.85)
+constant.set_editor_property("R", 0.5)
+
+# 表达式之间：四参数；不要调用 expression.connect_expression(...)
+ok = unreal.MaterialEditingLibrary.connect_material_expressions(
+    source, "", target, "A")
+
+# 接材质属性：只有表达式、输出名、MaterialProperty 三参数
+ok = unreal.MaterialEditingLibrary.connect_material_property(
+    expression, "", unreal.MaterialProperty.MP_EMISSIVE_COLOR)
+ok = unreal.MaterialEditingLibrary.connect_material_property(
+    opacity_expression, "", unreal.MaterialProperty.MP_OPACITY)
+
+unreal.MaterialEditingLibrary.layout_material_expressions(mat)
+unreal.MaterialEditingLibrary.recompile_material(mat)
+unreal.EditorAssetLibrary.save_asset(asset_path, only_if_is_dirty=False)
+```
+
+以上签名只代表已在 UE 5.6 验证；升级或降级引擎后仍需重新核对，不能把这段当成永久不变的 API。
 
 Texture Parameter 不能保持空纹理，否则材质可能编译失败。可用的编译占位包括：
 
