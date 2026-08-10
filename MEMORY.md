@@ -16,3 +16,4 @@
 
 ## Reference
 - [赌石玩法开发引导](kimmelrebirth_stonebetting.md) — 涉及 KimmelRebirth 赌石/原石/擦石/商人/鹰眼/背包/回收商时，先读 StoneBetting canonical guide 并在结束时维护
+- [UE 5.6 Python 材质脚本经验](ue5-python-material-building.md) — MaterialEditingLibrary pin 名、贴图默认值防崩溃、Noise 节点、两阶段构建策略
