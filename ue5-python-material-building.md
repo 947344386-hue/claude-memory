@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 13730bae-c1a1-428c-ae73-5c54845695a4
-  modified: 2026-08-10T11:30:26.642Z
+  modified: 2026-08-10T11:37:30.787Z
 ---
 
 # UE 5.6 Python 材质构建核心经验
@@ -55,8 +55,19 @@ metadata:
 - **第二阶段**（v5）：在稳定基底上加 Noise UV 扰动 + Noise Roughness 调制 + VertexColor.R 杂质分驱。
 - 核心原则：**每加一个节点类型先在编辑器里手动测 pin 名，再写进脚本。**
 
+## Decal 材质
+
+- `material_domain` 必须设 `MD_DEFERRED_DECAL`
+- `blend_mode` 用 `BLEND_MASKED`——线外用 `OpacityMask=0` 完全剔除，无半透明排序问题
+- `decal_blend_mode` 用 `DBM_TRANSLUCENT`
+- Decal UV 自动映射到 DecalBox：U=投影深度(不用)，V=宽(Y 方向 0..1)，W=长(Z 方向)。做细线只需操作 V 坐标。
+- 颜色/透明度参数用 `VectorParameter("Color")` + `ScalarParameter("Opacity")`，C++ 侧 `SetVectorParameterValue` / `SetScalarParameterValue` 运行时覆盖
+- 细线公式：`step(0, LineWidth - Abs(V - 0.5))`，LineWidth 默认 0.04（4%）
+- Decal emissive output 接 `MP_EMISSIVE_COLOR`，透明度接 `MP_OPACITY_MASK`
+
 ## 相关文件
 
-- `F:\UELibrary\KimmelRebirth\Tools\build_m_stone_cut_face.py` — 最终 v5 脚本
+- `F:\UELibrary\KimmelRebirth\Tools\build_m_stone_cut_face.py` — 最终 v5 切面材质脚本
+- `F:\UELibrary\KimmelRebirth\Tools\build_m_cut_aim_line.py` — 瞄准线 Decal 材质脚本
 - `F:\UELibrary\KimmelRebirth\Plugins\ClaudeCore\Source\ClaudeCore\Public\Data\ClcJadeTextureConfig.h` — `InjectIntoMID` 定义（6 个纹理参数名）
 - `F:\UELibrary\KimmelRebirth\Plugins\ClaudeCore\Source\ClaudeCore\Private\Actors\ClcCuttingStone.cpp` — `ApplyVoxelColorsToSection` + `SampleVoxelColor`（VertexColor 数据源）
