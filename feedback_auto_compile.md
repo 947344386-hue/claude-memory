@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: feedback
   originSessionId: d39ffac8-6499-4a2b-92b0-223eeca82082
-  modified: 2026-07-28T09:56:59.897Z
+  modified: 2026-08-11T17:16:37.257Z
 ---
 
 改完 ClaudeCore 代码后，主动询问用户"要代编译吗"；用户说需要就直接跑 `F:\UELibrary\KimmelRebirth\Build.bat` 代编译，不要每次都让用户自己开终端跑。

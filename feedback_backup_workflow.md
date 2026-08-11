@@ -5,6 +5,7 @@ metadata:
   node_type: memory
   type: feedback
   originSessionId: d39ffac8-6499-4a2b-92b0-223eeca82082
+  modified: 2026-08-11T17:17:36.092Z
 ---
 
 改 ClaudeCore 插件任何**已存在**的源码文件前，先把当前版本复制到工作库 `F:\ClaudeLibrary\KimmelRebirth\StoneBetting\`；改动推送到 GitHub 之后，删除那份备份。新建文件不需要备份。

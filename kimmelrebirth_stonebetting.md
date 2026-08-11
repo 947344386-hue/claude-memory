@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 6f668379-1a01-4bf6-ad21-03e1cf824113
-  modified: 2026-08-11T10:21:25.152Z
+  modified: 2026-08-11T17:18:26.616Z
 ---
 
 KimmelRebirth 的赌石玩法 canonical guide 位于 `F:\ClaudeLibrary\KimmelRebirth\StoneBetting\赌石玩法开发引导.md`。
@@ -18,41 +18,24 @@ KimmelRebirth 的赌石玩法 canonical guide 位于 `F:\ClaudeLibrary\KimmelReb
 
 **事实优先级：** 当前 ClaudeCore 源码 > 当前 JadeBetting 资产/DeveloperSettings > 已验证运行表现 > 规则书/设计稿/旧交接文档。完整数据流、入口类、资产索引、验证清单和历史文档定位只维护在 canonical guide，避免记忆与文档分叉。
 
-## 打包当前状态（2026-08-11 session）
+## 打包当前状态（2026-08-12 session）
 
 ### 已完成
-
-| Phase | 内容 | 文件 |
+| Phase | 内容 | 状态 |
 |-------|------|------|
-| 0 | GameInstance + Session类型 | ClcSessionTypes.h, ClcGameInstance.h/.cpp, DefaultEngine.ini 注册 GameInstanceClass |
-| 1 | 主菜单界面 | ClcMainMenuSubsystem.h/.cpp, ClcMainMenuWidget.h/.cpp, Map_MainMenu + BP_MainMenuGameMode + WBP_MainMenu（用户建） |
-| 2 | 存档系统 | ClcSaveManagerSubsystem.h/.cpp, Backpack/ToolDurability 各加 RestoreFromSaveData/SetSessionConfig |
+| 0 | GameInstance + Session类型 | ✅ |
+| 1 | 主菜单界面 | ✅ |
+| 2 | 存档系统 + 玩家坐标存档 + PauseMenu | ✅ 已验证 |
 
 编译：COMPILE SUCCESS（0 error 0 warning）
 
-### 已知问题
-
-| 问题 | 状态 |
-|------|------|
-| PIE 从 Map_MainMenu 点"开始新游戏"报 `GameInstance 不是 UClcGameInstance` | 已改 `GetLocalPlayer()->GetGameInstance()`，待用户 PIE 验证日志打出实际类型名 |
-| 删档按钮无存档时不隐藏 | 已修复（`DeleteSaveButton` 与 `NoSavesText` 互斥），编译通过待验证 |
-| `ContinueGame`/`QuitGame` 里的 `GetGameInstance` 旧写法未修正 | 下次一起改 |
-
-### 待验证（用户 PIE）
-1. 删档按钮互斥是否正确
-2. 开始新游戏后 GameInstance 类型日志是什么
-
 ### 后续 Phase（下次 session）
-
-| Phase | 内容 | 预计新增文件 |
-|-------|------|------------|
-| 3 | 任务/Quest系统 | ClcQuestTypes.h, ClcQuestConfig.h, ClcQuestSubsystem.h/.cpp, ClcQuestHudWidget.h/.cpp, DA_QuestConfig |
-| 4 | 摊位价值档位管理器 | ClcStallTierConfig.h, ClcStallValueTierManager.h/.cpp, DA_StallTierConfig |
-| 5 | 游戏流程整合（关卡转换+加载画面） | ClcGameFlowManager.h/.cpp, ClcLoadingScreenWidget.h/.cpp, DefaultEngine.ini 改 GameDefaultMap |
-| 6 | 打磨与全链路验证 | 纯修改 |
+| Phase | 内容 |
+|-------|------|
+| 3 | 任务/Quest系统 |
+| 4 | 摊位价值档位管理器 |
+| 5 | 游戏流程整合 |
+| 6 | 打磨与全链路验证 |
 
 ### 规划文档
-`C:\Users\mengwenbo\.claude\plans\bright-toasting-mitten.md`
-
-### 当前未提交变更
-无（本 session 最后一次编译修复后尚未 git add/commit）
+`C:\Users\mengwenbo\.claude\plans\shiny-mixing-hinton.md`

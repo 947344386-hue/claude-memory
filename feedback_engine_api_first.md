@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: feedback
   originSessionId: 111e71e8-fe56-4ec9-9510-e45461fdc63b
-  modified: 2026-08-07T13:02:47.277Z
+  modified: 2026-08-11T17:17:36.262Z
 ---
 
 **原则**：在基于 UE 引擎子系统做开发之前，必须先读完对应插件的所有公共头文件（`.h`），确认引擎是否已有现成 API。
@@ -19,5 +19,3 @@ metadata:
 2. 涉及任何引擎内置系统（物理、渲染、AI、动画等）→ 先到对应 `Engine/Plugins/` 或 `Engine/Source/Runtime/` 下列出公共头文件，确认 API 存量
 3. 不要在匿名 namespace 里手写图形学基础算法（多边形裁剪、三角化、边段串链）→ 引擎的 `FGeomTools` 已经做了
 4. 读到符合需求的 API 后看透签名和源码，确认边界语义（正侧保留、cap 材质分配、双面处理），再决定是否使用
-
-**相关案例**：`[[kimmelrebirth_stonebetting]]` 中 `AClcCuttingStone` 的手动切割代码被 `SliceProceduralMesh` 替代后，删除了 ~200 行匿名 namespace 函数，剖面 cap 由引擎 `FGeomTools` 生成。

@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: feedback
   originSessionId: 111e71e8-fe56-4ec9-9510-e45461fdc63b
-  modified: 2026-08-07T13:03:06.130Z
+  modified: 2026-08-11T17:17:36.327Z
 ---
 
 **原则**：相同的代码片段出现 3 次及以上，必须抽取到公共工具类/工具函数中，禁止逐文件粘贴。
@@ -19,5 +19,3 @@ metadata:
 1. 任何函数在 ≥2 个文件中出现相同实现 → 立刻抽成工具函数（静态/全局/基类）
 2. 状态机骨架考虑基类 `AClcInteractableStation` 统一：`EnterKey`/`ExitKey` 轮询、`KeyPrompt` 动态注册、`PlayerInRange` 缓存、`IsLookedAtByPlayer` 全部下沉
 3. 写新站点前先 grep 已有站点看看有没有可复用的函数
-
-**相关案例**：`[[kimmelrebirth_stonebetting]]` 中 5 个站点各自复制 `IsLookedAtByPlayer`，且各自做 `FindComponentByClass`。可通过基类或静态工具函数统一为 `UClcInteractionComponent* GetCachedInteractionComponent(APawn*)` + 单次缓存。

@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: feedback
   originSessionId: 5aea570f-c1c6-4807-9d93-9f191d52749a
-  modified: 2026-08-11T08:55:03.516Z
+  modified: 2026-08-11T17:17:36.363Z
 ---
 
 每次赌石 Demo 打包相关开发任务结束后，必须回写 `F:\ClaudeLibrary\KimmelRebirth\StoneBetting\赌石玩法开发引导.md` 的以下部分：
