@@ -20,5 +20,5 @@
 - [UE 资产合作与自动搭建工作流](reference_ui_widget_pattern.md) — C++/Python/DA/MID 分层协作；UI 路线：C++ 整体回退，WBP 整体换皮
 - [赌石玩法开发引导](kimmelrebirth_stonebetting.md) — StoneBetting canonical guide 指针
 - [UE 5.6 Python 材质脚本经验](ue5-python-material-building.md) — pin 名、崩溃规避、两阶段构建
-- [打包封装交接文档](kimmelrebirth-packaging-handoff.md) — 打包封装最新交接文档指针
+- [打包封装交接文档](kimmelrebirth-packaging-handoff.md) — 打包封装最新交接文档指针（2026-08-13 多槽位存档 + 加载画面完成，剩胜负判定/存档健壮性/打包验证）
 - [项目开发术语统一](reference_terminology.md) — 开窗→擦石、切割→解石
