@@ -15,6 +15,7 @@
 - [UE 资源路径由用户管理](feedback_user_manages_asset_paths.md) — 不擅自恢复、移动或重命名资产
 - [C++ UI Widget 可见性陷阱](feedback_ui_cpp_widget.md) — BuildDefaultLayout 放 NativeOnInitialized，Visibility=4 根因与修复
 - [赌石打包回写 canonical guide](feedback_doc_return_write.md) — 打包开发结束后回写引导文档
+- [动态加载资产须配 cook](feedback_cook_dynamic_load_assets.md) — 字符串路径加载的资产不进包→黑屏，DefaultGame.ini 加 DirectoriesToAlwaysCook
 
 ## Reference
 - [UE 资产合作与自动搭建工作流](reference_ui_widget_pattern.md) — C++/Python/DA/MID 分层协作；UI 路线：C++ 整体回退，WBP 整体换皮
