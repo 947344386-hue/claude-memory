@@ -11,6 +11,7 @@
 - [GitHub noreply 邮箱](feedback_github_noreply_email.md) — 推 GitHub 前 commit author 必须用 noreply 邮箱
 - [UE 验证边界](feedback_ue_validation_boundary.md) — 优先做 C++ 业务逻辑；蓝图配置、关卡摆放和 PIE 默认由用户完成
 - [Memory 自动推 GitHub](feedback_memory_auto_push.md) — 每次写 memory 后自动 commit+push 到 claude-memory 仓库
+- [Git 推送走代理](feedback_git_push_proxy.md) — 本机推 GitHub 须 `-c http.proxy=http://127.0.0.1:10808`（一次性参数）
 - [UE 资源路径由用户管理](feedback_user_manages_asset_paths.md) — 不擅自恢复、移动或重命名资产
 - [C++ UI Widget 可见性陷阱](feedback_ui_cpp_widget.md) — BuildDefaultLayout 放 NativeOnInitialized，Visibility=4 根因与修复
 - [赌石打包回写 canonical guide](feedback_doc_return_write.md) — 打包开发结束后回写引导文档

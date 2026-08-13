@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: reference
   originSessionId: 6f668379-1a01-4bf6-ad21-03e1cf824113
-  modified: 2026-08-11T17:18:26.649Z
+  modified: 2026-08-12T09:48:15.434Z
 ---
 
 项目开发术语统一（2026-08-07 定，用户拍板）。**文案、文档、memory、UI 字符串统一用以下术语；C++ 类名/函数名保留英文（Opening/Cutting）作内部标识符。**
@@ -23,6 +23,7 @@ metadata:
 | 切割 | 解石 | — |
 | 切割台 | 解石台 | `AClcCuttingTable` |
 | 切割石 | 解石载石 | `AClcCuttingStone` |
+| 升级台 | 拓局专线 | `AClcToolUpgradeStation` |
 
 ## 不改的
 - C++ 类名/函数名/UPROPERTY：`Opening`/`Cutting`/`Grind` 等英文标识符保留
